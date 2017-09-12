@@ -1,169 +1,49 @@
-Remote WebDriver
-~~~~~~~~~~~~~~~~
-
-**module:** selenium.webdriver.remote.webdriver
-
-Controls a browser by sending commands to a remote server.  This
-server is expected to be running the WebDriver wire protocol as
-defined here: http://code.google.com/p/selenium/wiki/JsonWireProtocol
+WebDriver Method Summary
+---
+---
 
 - class WebDriver(command_executor='http://127.0.0.1:4444/wd/hub',
         desired_capabilities=None, browser_profile=None)
     
+       
+
+*command_executor:* Either a command.CommandExecutor object or a
+string that specifies the URL of a remote server to send commands
+to.
+*desired_capabilities:* Dictionary holding predefined values for
+starting a browser
+*browser_profile:* A
+selenium.webdriver.firefox.firefox_profile.FirefoxProfile object.
+Only used if Firefox is requested.
+
+Other Attributes:
+*error_handler:* errorhandler.ErrorHandler object used to verify
+that the server did not return an error.
+
+*session_id:* The session ID to send with every command.
+
+*capabilities:* A dictionary of capabilities of the underlying
+browser for this instance's session (This is set by passing
+`desired_capabilities` argument)
 
 
-  Create a new driver that will issue commands using the wire protocol.
-        
+| Method Name  | Description  | Args  |  Usage |
+|---|---|---|---|
+| name  | Returns the name of the underlying browser for this instance  |   |   |
+| start_client()  |  Called before starting a new session. This method may be overridden to define custom startup behavior |   | driver.start_client()  |
+| stop_client  | Called after executing a quit command. This method may be overridden to define custom shutdown behavior. |   | driver.stop_client()  |
+| start_session | Creates a new session with the desired capabilities. | a. browser_name: The name of the browser to request b. version: Which browser version to request c. platform: Which platform to request the browser on. d.javascript_enabled: Whether the new session should support JavaScript e. browser_profile:A selenium.webdriver.firefox.firefox_profile.FirefoxProfile  object.  Only used if Firefox is requested. | driver.start_session(desired_capabilities, browser_profile=None)  |
+| create_web_element  | Creates a web element with the specified element_id.  |   | create_web_element(element_id)  |
+| execute  |  Sends a command to be executed by a command.CommandExecutor. | a. driver_command: The name of the command to execute as a string. b. params: A dictionary of named parameters to send with the command. | execute(driver_command, params=None)   # Returns command's JSON response loaded into a dictionary object|
+| get  | Loads a web page in the current browser session.  |   | driver.get(url)  |
+| title  | Returns the title of the current page.  |   | driver.title  |
+| find_element_by_id  | Finds an element by id.  | id\_: The id of the element to be found.  | driver.find_element_by_id('foo')  |
+| find_elements_by_id  | Finds all element by id.  | id\_: The element with similar id's to be found.  | driver.find_elements_by_id('foo')  |
+| find_element_by_xpath  | Finds an element by xapth.  | xpath: The xpath locator of the element to find.  | driver.find_element_by_xpath('//div/td[1]')  |
+| find_elements_by_xpath  | Finds all elements by xapth.  | xpath: The xpath locator of the element to find.  | driver.find_elements_by_xpath('//div/td[1]')  |
+| find_element_by_link_text  | Finds an element by link text.  | link_text: The text of the element to be found.  | driver.find_element_by_link_text('Sign In')  |
+| find_elements_by_link_text  | Finds all elements by link text.  | link_text: The text of the element to be found.  | driver.find_elements_by_link_text('Sign In')  |
 
-  *command_executor:* Either a command.CommandExecutor object or a
-  string that specifies the URL of a remote server to send commands
-  to.
-
-  *desired_capabilities:* Dictionary holding predefined values for
-  starting a browser
-
-  *browser_profile:* A
-  selenium.webdriver.firefox.firefox_profile.FirefoxProfile object.
-  Only used if Firefox is requested.
-
-  Other Attributes:
-
-  *error_handler:* errorhandler.ErrorHandler object used to verify
-  that the server did not return an error.
-
-  *session_id:* The session ID to send with every command.
-
-  *capabilities:* A dictionary of capabilities of the underlying
-  browser for this instance's session (This is set by passing
-  `desired_capabilities` argument)
-
-  
-  - name
-
-    Returns the name of the underlying browser for this instance.
-        
-
-  - start_client():
-
-    Called before starting a new session. This method may be
-    overridden to define custom startup behavior.
-
-
-  - stop_client()
-
-    Called after executing a quit command. This method may be
-    overridden to define custom shutdown behavior.
-
-::
-
-  - start_session(desired_capabilities, browser_profile=None)
-
-    Creates a new session with the desired capabilities.
-
-    Args:
-
-         - browser_name: The name of the browser to request.
-         - version: Which browser version to request.
-         - platform: Which platform to request the browser on.
-         - javascript_enabled: Whether the new session should support JavaScript.
-         - browser_profile:
-           A selenium.webdriver.firefox.firefox_profile.FirefoxProfile
-           object.  Only used if Firefox is requested.
-
-            
-  - create_web_element(element_id)
-
-    Creates a web element with the specified element_id.
-
-  - execute(driver_command, params=None)
-
-    Sends a command to be executed by a command.CommandExecutor.
-
-    Args:
-         - driver_command: The name of the command to execute as a string.
-         - params: A dictionary of named parameters to send with the command.
-        
-        :Returns:
-          The command's JSON response loaded into a dictionary object.
-
-
-  - get(url)
-
-    Loads a web page in the current browser session.
-
-
-  - title
-
-    Returns the title of the current page.
-
-    Usage:
-            driver.title
-
-    
-  - find_element_by_id(id_)
-
-    Finds an element by id.
-
-    Args:
-         - id\_: The id of the element to be found.
-        
-        :Usage:
-            driver.find_element_by_id('foo')
-
-    
-  - find_elements_by_id(id_)
-
-    Finds multiple elements by id.
-
-    Args:
-         - id\_: The id of the elements to be found.
-        
-        :Usage:
-            driver.find_element_by_id('foo')
-
-    
-  - find_element_by_xpath(xpath)
-
-    Finds an element by xpath.
-
-    Args:
-         - xpath: The xpath locator of the element to find.
-        
-        :Usage:
-            driver.find_element_by_xpath('//div/td[1]')
-
-    
-  - find_elements_by_xpath(xpath)
-
-    Finds multiple elements by xpath.
-
-    Args:
-         - xpath: The xpath locator of the elements to be found.
-        
-        :Usage:
-            driver.find_elements_by_xpath("//div[contains(@class, 'foo')]")
-
-    
-  - find_element_by_link_text(link_text)
-
-    Finds an element by link text.
-
-    Args:
-         - link_text: The text of the element to be found.
-        
-        :Usage:
-            driver.find_element_by_link_text('Sign In')
-
-    
-  - find_elements_by_link_text(text)
-
-    Finds elements by link text.
-
-    Args:
-         - link_text: The text of the elements to be found.
-        
-        :age:
-         driver.find_elements_by_link_text('Sign In')
 
     
   - find_element_by_partial_link_text(link_text)
